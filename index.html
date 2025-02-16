@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Uploader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quote Uploader</h1>
+        <div class="upload-form">
+            <textarea id="quote-input" placeholder="Enter your quote here..."></textarea>
+            <button onclick="uploadQuote()">Upload Quote</button>
+        </div>
+        <div class="search-form">
+            <input type="text" id="search-input" placeholder="Search quotes..." oninput="searchQuotes()">
+        </div>
+        <div class="quotes-list" id="quotes-list">
+            <!-- Quotes will be displayed here -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
