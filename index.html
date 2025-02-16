@@ -9,50 +9,45 @@
 <body>
     <div class="container">
         <h1>Quote Uploader</h1>
-        <div id="auth-section">
-            <button id="signup-btn">Sign Up</button>
-            <button id="login-btn">Log In</button>
-            <button id="logout-btn" style="display: none;">Log Out</button>
-            <span id="welcome-user" style="display: none;"></span>
-        </div>
+        <div class="quote-of-the-day" id="quote-of-the-day"></div>
         <div class="upload-form">
             <textarea id="quote-input" placeholder="Enter your quote here..."></textarea>
+            <input type="text" id="tags-input" placeholder="Enter tags separated by commas">
             <button onclick="uploadQuote()">Upload Quote</button>
         </div>
         <div class="search-form">
             <input type="text" id="search-input" placeholder="Search quotes..." oninput="searchQuotes()">
         </div>
         <div class="filter-sort">
-            <select id="sort-select" onchange="sortQuotes()">
-                <option value="date">Sort by Date</option>
-                <option value="likes">Sort by Likes</option>
-                <option value="favorites">Sort by Favorites</option>
+            <button onclick="showTopQuotes()">Top Quotes</button>
+            <select id="tag-select" onchange="filterByTag()">
+                <option value="">Filter by Tag</option>
             </select>
-            <button id="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
         </div>
         <div class="quotes-list" id="quotes-list">
             <!-- Quotes will be displayed here -->
         </div>
     </div>
 
-    <!-- Authentication Modals -->
-    <div id="signup-modal" class="modal">
+    <!-- User Profile Modal -->
+    <div id="profile-modal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('signup-modal')">&times;</span>
-            <h2>Sign Up</h2>
-            <input type="text" id="signup-username" placeholder="Username">
-            <input type="password" id="signup-password" placeholder="Password">
-            <button onclick="signUp()">Sign Up</button>
+            <span class="close" onclick="closeModal('profile-modal')">&times;</span>
+            <h2>User Profile</h2>
+            <div id="profile-quotes">
+                <!-- User's quotes will be displayed here -->
+            </div>
         </div>
     </div>
 
-    <div id="login-modal" class="modal">
+    <!-- Comments Modal -->
+    <div id="comments-modal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('login-modal')">&times;</span>
-            <h2>Log In</h2>
-            <input type="text" id="login-username" placeholder="Username">
-            <input type="password" id="login-password" placeholder="Password">
-            <button onclick="logIn()">Log In</button>
+            <span class="close" onclick="closeModal('comments-modal')">&times;</span>
+            <h2>Comments</h2>
+            <div id="comments-list"></div>
+            <textarea id="comment-input" placeholder="Enter your comment here..."></textarea>
+            <button onclick="addComment()">Add Comment</button>
         </div>
     </div>
 
