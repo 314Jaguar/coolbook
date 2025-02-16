@@ -1,12 +1,26 @@
 let quotes = [];
+let users = [];
+let currentUser = null;
+let favoriteQuotes = [];
+let darkMode = false;
 
 function uploadQuote() {
     const quoteInput = document.getElementById('quote-input');
     const quoteText = quoteInput.value.trim();
-    if (quoteText) {
-        quotes.push(quoteText);
+    if (quoteText && currentUser) {
+        const quote = {
+            text: quoteText,
+            user: currentUser.username,
+            date: new Date().toISOString(),
+            likes: 0,
+            favorites: 0,
+            comments: []
+        };
+        quotes.push(quote);
         quoteInput.value = '';
         displayQuotes();
+    } else if (!currentUser) {
+        alert("Please log in to upload a quote.");
     }
 }
 
@@ -17,49 +31,13 @@ function displayQuotes() {
         const quoteItem = document.createElement('div');
         quoteItem.className = 'quote-item';
         quoteItem.innerHTML = `
-            <p>${quote}</p>
+            <p>${quote.text}</p>
+            <p><small>by ${quote.user} on ${new Date(quote.date).toLocaleString()}</small></p>
             <div class="actions">
-                <button onclick="likeQuote(${index})">Like</button>
+                <button onclick="likeQuote(${index})">Like (${quote.likes})</button>
+                <button onclick="favoriteQuote(${index})">Favorite (${quote.favorites})</button>
+                <button onclick="commentQuote(${index})">Comment</button>
                 <button onclick="shareQuote(${index})">Share</button>
             </div>
-        `;
-        quotesList.appendChild(quoteItem);
-    });
-}
-
-function searchQuotes() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    const filteredQuotes = quotes.filter(quote => quote.toLowerCase().includes(searchInput));
-    const quotesList = document.getElementById('quotes-list');
-    quotesList.innerHTML = '';
-    filteredQuotes.forEach((quote, index) => {
-        const quoteItem = document.createElement('div');
-        quoteItem.className = 'quote-item';
-        quoteItem.innerHTML = `
-            <p>${quote}</p>
-            <div class="actions">
-                <button onclick="likeQuote(${index})">Like</button>
-                <button onclick="shareQuote(${index})">Share</button>
-            </div>
-        `;
-        quotesList.appendChild(quoteItem);
-    });
-}
-
-function likeQuote(index) {
-    alert(`You liked the quote: "${quotes[index]}"`);
-}
-
-function shareQuote(index) {
-    const quote = quotes[index];
-    const shareData = {
-        title: 'Quote',
-        text: quote,
-        url: window.location.href,
-    };
-    navigator.share(shareData).then(() => {
-        alert('Quote shared successfully');
-    }).catch((error) => {
-        alert('Error sharing quote: ' + error);
-    });
-}
+            <div class="comments">
+               
